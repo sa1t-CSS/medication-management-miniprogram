@@ -1,0 +1,12 @@
+# Local tools and credentials
+.idea/
+.vscode/
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore
+node_modules/
+project.private.config.json

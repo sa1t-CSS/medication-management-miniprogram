@@ -1,0 +1,133 @@
+.date-detail-page {
+  background-color: var(--gray);
+  min-height: 100vh;
+  padding: 30rpx;
+}
+
+.date-header {
+  text-align: center;
+  padding: 40rpx 0;
+  background-color: white;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+  box-shadow: var(--shadow);
+  border: 1rpx solid var(--border-color);
+}
+
+.selected-date {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 10rpx;
+}
+
+.date-title {
+  font-size: 28rpx;
+  color: var(--text-light);
+}
+
+.plans-section {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: var(--shadow);
+  border: 1rpx solid var(--border-color);
+}
+
+.time-section {
+  margin-bottom: 40rpx;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding-bottom: 15rpx;
+  border-bottom: 2rpx solid;
+}
+
+.morning-header {
+  border-bottom-color: #d89b35;
+  color: #9b681a;
+}
+
+.noon-header {
+  border-bottom-color: #4f9dac;
+  color: #256f7b;
+}
+
+.evening-header {
+  border-bottom-color: #4b5f8f;
+  color: #223a5e;
+}
+
+.time-icon {
+  font-size: 36rpx;
+  margin-right: 15rpx;
+}
+
+.time-title {
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.plan-list {
+  padding-left: 50rpx;
+}
+
+.plan-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.plan-item:last-child {
+  border-bottom: none;
+}
+
+.plan-time {
+  width: 120rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.plan-info {
+  flex: 1;
+}
+
+.medicine-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 5rpx;
+  color: var(--text-dark);
+}
+
+.medicine-dose {
+  font-size: 24rpx;
+  color: var(--text-light);
+}
+
+.no-plans {
+  text-align: center;
+  padding: 60rpx 0;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  font-size: 32rpx;
+  color: var(--text-light);
+  margin-bottom: 10rpx;
+}
+
+.empty-desc {
+  font-size: 24rpx;
+  color: var(--text-light);
+  opacity: 0.7;
+}

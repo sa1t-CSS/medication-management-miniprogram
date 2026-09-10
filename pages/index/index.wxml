@@ -1,0 +1,104 @@
+<view class="container index-page">
+<!-- 
+                   _ooOoo_
+                  o8888888o
+                  88" . "88
+                  (| -_- |)
+                  O\  =  /O
+               ____/`---'\____
+             .'  \\|     |//  `.
+            /  \\|||  :  |||//  \
+           /  _||||| -:- |||||-  \
+           |   | \\\  -  /// |   |
+           | \_|  ''\---/''  |   |
+           \  .-\__  `-`  ___/-. /
+         ___`. .'  /--.--\  `. . __
+      ."" '<  `.___\_<|>_/___.'  >'"".
+     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+     \  \ `-.   \_ __\ /__ _/   .-` /  /
+======`-.____`-.___\_____/___.-`____.-'======
+                   `=---='
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            佛祖保佑       永无BUG
+ -->
+  <view class="school-brand">
+    <image class="school-logo" src="/ppppppp/school-logo.jpg" mode="aspectFit"></image>
+    <view class="school-info">
+      <view class="school-name">西安财经大学</view>
+      <view class="school-subtitle">医疗健康管理小程序</view>
+    </view>
+  </view>
+
+  <!-- 日历组件 -->
+  <view class="card calendar-section">
+    <view class="calendar-header">
+      <view class="calendar-title">用药日历</view>
+      <view class="calendar-nav">
+        <view class="nav-btn" bindtap="prevMonth">‹</view>
+        <view class="current-month">{{currentYear}}年{{currentMonth}}月</view>
+        <view class="nav-btn" bindtap="nextMonth">›</view>
+      </view>
+    </view>
+    
+    <view class="calendar-weekdays">
+      <view class="weekday" wx:for="{{weekdays}}" wx:key="index">{{item}}</view>
+    </view>
+    
+    <view class="calendar-days">
+      <view class="day empty" wx:for="{{prevMonthDays}}" wx:key="index"></view>
+      <view class="day {{item.isToday ? 'today' : ''}} {{item.isSelected ? 'selected' : ''}} {{item.count > 0 ? 'has-medication' : ''}}" 
+            wx:for="{{calendarDayItems}}" 
+            wx:key="day"
+            data-date="{{item.day}}"
+            bindtap="onDayClick">
+        <view class="day-number" style="{{item.dayNumberStyle}}">{{item.day}}</view>
+        <view class="medication-indicator" style="{{item.indicatorStyle}}"></view>
+        <view class="medication-count" wx:if="{{item.count > 0}}">
+          {{item.count}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 三个时间段区块 -->
+  <view class="time-blocks-container">
+    <view class="time-block morning-block" data-time="morning" bindtap="navigateToTimePage">
+      <view class="block-text">早晨用药</view>
+      <view class="block-count">{{morningCount}}个计划</view>
+    </view>
+    
+    <view class="time-block noon-block" data-time="noon" bindtap="navigateToTimePage">
+      <view class="block-text">中午用药</view>
+      <view class="block-count">{{noonCount}}个计划</view>
+    </view>
+    
+    <view class="time-block evening-block" data-time="evening" bindtap="navigateToTimePage">
+      <view class="block-text">晚上用药</view>
+      <view class="block-count">{{eveningCount}}个计划</view>
+    </view>
+  </view>
+  
+  <!-- 今日提醒 -->
+  <view class="card reminder-section">
+    <view class="section-title">
+      <text>今日提醒</text>
+      <view class="clear-reminders" bindtap="clearAllReminders" wx:if="{{reminders.length > 0}}">清空</view>
+    </view>
+    <view class="reminder-item" wx:for="{{reminders}}" wx:key="id" data-id="{{item.id}}" bindtap="removeReminder">
+      <view class="reminder-time">{{item.time}}</view>
+      <view class="reminder-content">
+        <view class="reminder-period">{{item.period}}用药</view>
+        <view class="reminder-medicine">{{item.medicine}} {{item.dose}}</view>
+      </view>
+    </view>
+    <view class="no-reminder" wx:if="{{reminders.length === 0}}">
+      <text>暂无用药提醒</text>
+      <view style="font-size: 24rpx; margin-top: 20rpx;">在"我的"页面添加用药计划</view>
+    </view>
+  </view>
+
+  <view class="emergency-float" bindtap="callEmergencyContact" wx:if="{{emergencyContactPhone}}">
+    <view class="emergency-label">急</view>
+    <view class="emergency-phone">{{emergencyContactName || '紧急联系人'}}</view>
+  </view>
+</view>

@@ -1,0 +1,291 @@
+.smart-page {
+  background-color: var(--gray);
+  min-height: 100vh;
+  padding-bottom: 40rpx;
+}
+
+.smart-header {
+  text-align: center;
+  padding: 40rpx 0;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: var(--text-dark);
+  margin-bottom: 10rpx;
+}
+
+.header-desc {
+  font-size: 28rpx;
+  color: var(--text-light);
+}
+
+.camera-section {
+  background-color: var(--white);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin: 0 30rpx 30rpx;
+  box-shadow: var(--shadow);
+  border: 1rpx solid var(--border-color);
+}
+
+.camera-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 30rpx;
+}
+
+.control-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10rpx;
+  padding: 18rpx 26rpx;
+  border: 2rpx solid rgba(37, 111, 123, 0.22);
+  border-radius: 14rpx;
+  background-color: var(--primary-soft);
+}
+
+.btn-icon {
+  font-size: 48rpx;
+}
+
+.btn-text {
+  font-size: 24rpx;
+  color: var(--text-light);
+}
+
+.take-photo .btn-icon {
+  color: var(--primary-color);
+}
+
+.form-section {
+  background-color: var(--white);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin: 0 30rpx 30rpx;
+  box-shadow: var(--shadow);
+  border: 1rpx solid var(--border-color);
+}
+
+.preview-image {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30rpx;
+}
+
+.preview-image image {
+  border-radius: 12rpx;
+  border: 2rpx solid var(--border-color);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 30rpx;
+  color: var(--text-dark);
+  text-align: center;
+}
+
+.medicine-info-card {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background-color: var(--primary-soft);
+  border-radius: 12rpx;
+  border: 1rpx solid var(--border-color);
+  margin-bottom: 30rpx;
+  gap: 20rpx;
+}
+
+.medicine-info-card .medicine-image {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 8rpx;
+}
+
+.medicine-details {
+  flex: 1;
+}
+
+.medicine-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 5rpx;
+  color: var(--text-dark);
+}
+
+.medicine-dose {
+  font-size: 24rpx;
+  color: var(--text-light);
+}
+
+.form-group {
+  margin-bottom: 30rpx;
+}
+
+.form-label {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 15rpx;
+  color: var(--text-dark);
+}
+
+.form-input {
+  border: 2rpx solid var(--border-color);
+  border-radius: 10rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  background-color: #f9f9f9;
+}
+
+.date-picker, .time-picker {
+  color: var(--text-light);
+}
+
+.time-periods {
+  display: flex;
+  gap: 20rpx;
+}
+
+.period-btn {
+  flex: 1;
+  padding: 20rpx;
+  text-align: center;
+  border: 2rpx solid var(--border-color);
+  border-radius: 10rpx;
+  background-color: #f9f9f9;
+  transition: all 0.3s ease;
+}
+
+.period-btn.active {
+  background: linear-gradient(135deg, var(--primary-deep), var(--primary-color));
+  color: white;
+  border-color: var(--accent-color);
+  box-shadow: var(--button-shadow);
+  transform: translateY(-2rpx);
+}
+
+.period-icon {
+  font-size: 36rpx;
+  margin-bottom: 8rpx;
+}
+
+.period-text {
+  font-size: 24rpx;
+}
+
+.duration-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15rpx;
+}
+
+.duration-btn {
+  padding: 20rpx 15rpx;
+  border: 2rpx solid var(--border-color);
+  border-radius: 10rpx;
+  background-color: #f9f9f9;
+  text-align: center;
+  font-size: 24rpx;
+  transition: all 0.3s ease;
+  flex: 1;
+  min-width: 100rpx;
+}
+
+.duration-btn.active {
+  background: linear-gradient(135deg, var(--primary-deep), var(--primary-color));
+  color: white;
+  border-color: var(--accent-color);
+  box-shadow: var(--button-shadow);
+  transform: translateY(-2rpx);
+}
+
+.form-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 40rpx;
+}
+
+.btn {
+  flex: 1;
+  padding: 24rpx;
+  text-align: center;
+  border: 2rpx solid var(--border-color);
+  border-radius: 10rpx;
+  font-weight: bold;
+  font-size: 28rpx;
+}
+
+.btn-cancel {
+  background-color: #f5f5f5;
+  color: var(--text-light);
+}
+
+.btn-confirm {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-deep);
+  box-shadow: var(--button-shadow);
+}
+
+.saved-medicines-section {
+  background-color: var(--white);
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin: 0 30rpx;
+  box-shadow: var(--shadow);
+  border: 1rpx solid var(--border-color);
+}
+
+.medicine-list {
+  max-height: 400rpx;
+  overflow-y: auto;
+}
+
+.medicine-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  border-bottom: 1rpx solid var(--border-color);
+  gap: 20rpx;
+}
+
+.medicine-item .medicine-image {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 8rpx;
+}
+
+.medicine-info {
+  flex: 1;
+}
+
+.medicine-item .medicine-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 5rpx;
+  color: var(--text-dark);
+}
+
+.medicine-item .medicine-dose {
+  font-size: 24rpx;
+  color: var(--text-light);
+}
+
+.medicine-use-btn {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 12rpx 24rpx;
+  border: 2rpx solid var(--primary-deep);
+  border-radius: 20rpx;
+  font-size: 24rpx;
+}
+
+.empty-tip {
+  text-align: center;
+  color: var(--text-light);
+  padding: 40rpx 0;
+  font-size: 28rpx;
+}

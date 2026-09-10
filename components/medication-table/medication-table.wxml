@@ -1,0 +1,17 @@
+<view class="medication-table">
+  <view class="table-header">
+    <view class="table-cell">药品名称</view>
+    <view class="table-cell">剂量</view>
+    <view class="table-cell">时间</view>
+  </view>
+  <view class="table-body">
+    <view class="table-row" wx:for="{{medicationList}}" wx:key="index">
+      <view class="table-cell">{{item.name}}</view>
+      <view class="table-cell">{{item.dose}}</view>
+      <view class="table-cell">{{item.time}}</view>
+    </view>
+    <view class="table-row empty-row" wx:if="{{medicationList.length === 0}}">
+      <view class="table-cell">暂无用药计划</view>
+    </view>
+  </view>
+</view>

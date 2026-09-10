@@ -1,0 +1,146 @@
+<view class="container smart-page">
+  <view class="smart-header">
+    <view class="header-title">拍照识别</view>
+    <view class="header-desc">拍摄药品并记录基本信息</view>
+  </view>
+  
+  <!-- 
+                   _ooOoo_
+                  o8888888o
+                  88" . "88
+                  (| -_- |)
+                  O\  =  /O
+               ____/`---'\____
+             .'  \\|     |//  `.
+            /  \\|||  :  |||//  \
+           /  _||||| -:- |||||-  \
+           |   | \\\  -  /// |   |
+           | \_|  ''\---/''  |   |
+           \  .-\__  `-`  ___/-. /
+         ___`. .'  /--.--\  `. . __
+      ."" '<  `.___\_<|>_/___.'  >'"".
+     | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+     \  \ `-.   \_ __\ /__ _/   .-` /  /
+======`-.____`-.___\_____/___.-`____.-'======
+                   `=---='
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            佛祖保佑       永无BUG
+ -->
+
+  <!-- 相机区域 -->
+  <view class="camera-section" wx:if="{{!showForm}}">
+    <camera device-position="back" flash="off" binderror="cameraError" style="width: 100%; height: 500rpx;"></camera>
+    
+    <view class="camera-controls">
+      <view class="control-btn take-photo" bindtap="takePhoto">
+        <view class="btn-icon">📷</view>
+        <view class="btn-text">拍摄药品</view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 药品基本信息表单 -->
+  <view class="form-section" wx:if="{{showForm && !showScheduleForm}}">
+    <view class="preview-image">
+      <image src="{{tempImagePath}}" mode="aspectFit" style="width: 300rpx; height: 300rpx;"></image>
+    </view>
+    
+    <view class="form-group">
+      <view class="form-label">药品名称</view>
+      <input class="form-input" value="{{medicineName}}" placeholder="请输入药品名称" bindinput="onNameInput" />
+    </view>
+    
+    <view class="form-group">
+      <view class="form-label">药品剂量</view>
+      <input class="form-input" value="{{medicineDose}}" placeholder="请输入每次用量" bindinput="onDoseInput" />
+    </view>
+    
+    <view class="form-actions">
+      <view class="btn btn-cancel" bindtap="cancelForm">取消</view>
+      <view class="btn btn-confirm" bindtap="saveMedicineInfo">保存药品信息</view>
+    </view>
+  </view>
+  
+  <!-- 用药计划设置表单 -->
+  <view class="form-section" wx:if="{{showScheduleForm}}">
+    <view class="section-title">设置用药计划</view>
+    
+    <view class="medicine-info-card">
+      <image class="medicine-image" src="{{currentMedicine.imagePath}}" mode="aspectFit"></image>
+      <view class="medicine-details">
+        <view class="medicine-name">{{currentMedicine.name}}</view>
+        <view class="medicine-dose">{{currentMedicine.dose}}</view>
+      </view>
+    </view>
+    
+    <view class="form-group">
+      <view class="form-label">开始日期</view>
+      <picker mode="date" value="{{selectedDate}}" bindchange="onDateChange">
+        <view class="form-input date-picker">{{selectedDate || '请选择开始日期'}}</view>
+      </picker>
+    </view>
+    
+    <view class="form-group">
+      <view class="form-label">用药时间</view>
+      <picker mode="time" value="{{selectedTime}}" bindchange="onTimeChange">
+        <view class="form-input time-picker">{{selectedTime || '请选择用药时间'}}</view>
+      </picker>
+    </view>
+    
+    <view class="form-group">
+      <view class="form-label">用药时段</view>
+      <view class="time-periods">
+        <view class="period-btn {{selectedPeriod === 'morning' ? 'active' : ''}}" 
+              data-period="morning" bindtap="selectPeriod">
+          <view class="period-icon">🌅</view>
+          <view class="period-text">早晨</view>
+        </view>
+        <view class="period-btn {{selectedPeriod === 'noon' ? 'active' : ''}}" 
+              data-period="noon" bindtap="selectPeriod">
+          <view class="period-icon">☀️</view>
+          <view class="period-text">中午</view>
+        </view>
+        <view class="period-btn {{selectedPeriod === 'evening' ? 'active' : ''}}" 
+              data-period="evening" bindtap="selectPeriod">
+          <view class="period-icon">🌙</view>
+          <view class="period-text">晚上</view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="form-group">
+      <view class="form-label">服药时长</view>
+      <view class="duration-options">
+        <view class="duration-btn {{selectedDuration === 1 ? 'active' : ''}}" data-days="1" bindtap="selectDuration">1天</view>
+        <view class="duration-btn {{selectedDuration === 3 ? 'active' : ''}}" data-days="3" bindtap="selectDuration">3天</view>
+        <view class="duration-btn {{selectedDuration === 7 ? 'active' : ''}}" data-days="7" bindtap="selectDuration">7天</view>
+        <view class="duration-btn {{selectedDuration === 14 ? 'active' : ''}}" data-days="14" bindtap="selectDuration">14天</view>
+        <view class="duration-btn {{selectedDuration === 30 ? 'active' : ''}}" data-days="30" bindtap="selectDuration">30天</view>
+        <view class="duration-btn {{selectedDuration === 0 ? 'active' : ''}}" data-days="0" bindtap="selectDuration">长期</view>
+      </view>
+    </view>
+    
+    <view class="form-actions">
+      <view class="btn btn-cancel" bindtap="cancelSchedule">上一步</view>
+      <view class="btn btn-confirm" bindtap="saveMedicationPlan">完成计划设置</view>
+    </view>
+  </view>
+  
+  <!-- 已保存的药品列表 -->
+  <view class="saved-medicines-section">
+    <view class="section-title">已保存的药品</view>
+    <view class="medicine-list">
+      <view class="medicine-item" wx:for="{{savedMedicines}}" wx:key="id" data-medicine="{{item}}" bindtap="useSavedMedicine">
+        <image class="medicine-image" src="{{item.imagePath}}" mode="aspectFill"></image>
+        <view class="medicine-info">
+          <view class="medicine-name">{{item.name}}</view>
+          <view class="medicine-dose">{{item.dose}}</view>
+        </view>
+        <view class="medicine-use-btn">设置计划</view>
+      </view>
+      <view class="empty-tip" wx:if="{{savedMedicines.length === 0}}">
+        暂无保存的药品，请先拍摄添加
+      </view>
+    </view>
+  </view>
+</view>

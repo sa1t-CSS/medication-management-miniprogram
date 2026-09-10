@@ -1,0 +1,18 @@
+<view class="bottom-nav">
+  <view class="nav-item {{currentPage === 'index' ? 'active' : ''}}" data-page="index" bindtap="switchTab">
+    <view class="icon">🏠</view>
+    <view class="label">首页</view>
+  </view>
+  <view class="nav-item {{currentPage === 'pending' ? 'active' : ''}}" data-page="pending" bindtap="switchTab">
+    <view class="icon">⏳</view>
+    <view class="label">待定</view>
+  </view>
+  <view class="nav-item {{currentPage === 'smart' ? 'active' : ''}}" data-page="smart" bindtap="switchTab">
+    <view class="icon">📷</view>
+    <view class="label">药物录入</view>
+  </view>
+  <view class="nav-item {{currentPage === 'mine' ? 'active' : ''}}" data-page="mine" bindtap="switchTab">
+    <view class="icon">👤</view>
+    <view class="label">我的</view>
+  </view>
+</view>

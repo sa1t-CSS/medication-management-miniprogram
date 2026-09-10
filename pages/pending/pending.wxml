@@ -1,0 +1,89 @@
+<view class="container pending-page">
+  <view class="header-section">
+    <view class="header-title">医嘱记录</view>
+    <view class="header-desc">记录医生嘱咐的用药信息</view>
+  </view>
+
+  <view class="record-overview">
+    <view class="overview-item overview-blue">
+      <view class="overview-value">{{medicalRecords.length}}</view>
+      <view class="overview-label">历史记录</view>
+    </view>
+    <view class="overview-item overview-orange">
+      <view class="overview-value">{{selectedTimes.length}}</view>
+      <view class="overview-label">已选时间</view>
+    </view>
+  </view>
+
+  <view class="card form-section">
+    <view class="section-title">添加医嘱记录</view>
+
+    <view class="form-group">
+      <view class="form-label">药物名称</view>
+      <input class="form-input" value="{{medicineName}}" placeholder="请输入药物名称" bindinput="onMedicineNameInput" />
+    </view>
+
+    <view class="form-group">
+      <view class="form-label">服用频率</view>
+      <view class="frequency-options">
+        <view class="frequency-btn {{frequencyKey === 'once' ? 'active' : ''}}" data-key="once" bindtap="selectFrequency">每日一次</view>
+        <view class="frequency-btn {{frequencyKey === 'twice' ? 'active' : ''}}" data-key="twice" bindtap="selectFrequency">每日两次</view>
+        <view class="frequency-btn {{frequencyKey === 'three' ? 'active' : ''}}" data-key="three" bindtap="selectFrequency">每日三次</view>
+        <view class="frequency-btn {{frequencyKey === 'needed' ? 'active' : ''}}" data-key="needed" bindtap="selectFrequency">按需服用</view>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <view class="form-label">服用时间</view>
+      <view class="time-options">
+        <view class="time-btn {{selectedTimeMap.morning ? 'active' : ''}}" data-key="morning" bindtap="toggleTime">早晨</view>
+        <view class="time-btn {{selectedTimeMap.noon ? 'active' : ''}}" data-key="noon" bindtap="toggleTime">中午</view>
+        <view class="time-btn {{selectedTimeMap.evening ? 'active' : ''}}" data-key="evening" bindtap="toggleTime">晚上</view>
+        <view class="time-btn {{selectedTimeMap.beforeMeal ? 'active' : ''}}" data-key="beforeMeal" bindtap="toggleTime">饭前</view>
+        <view class="time-btn {{selectedTimeMap.afterMeal ? 'active' : ''}}" data-key="afterMeal" bindtap="toggleTime">饭后</view>
+        <view class="time-btn {{selectedTimeMap.beforeSleep ? 'active' : ''}}" data-key="beforeSleep" bindtap="toggleTime">睡前</view>
+      </view>
+    </view>
+
+    <view class="form-group">
+      <view class="form-label">备注信息</view>
+      <textarea class="form-textarea" value="{{notes}}" placeholder="请输入备注信息，例如特殊注意事项" bindinput="onNotesInput" maxlength="200" />
+    </view>
+
+    <view class="form-actions">
+      <view class="btn btn-cancel" bindtap="clearForm">清空</view>
+      <view class="btn btn-confirm" bindtap="saveMedicalRecord">保存记录</view>
+    </view>
+  </view>
+
+  <view class="card records-section">
+    <view class="section-title">
+      <text>历史医嘱记录</text>
+      <view class="clear-records" bindtap="clearAllRecords" wx:if="{{medicalRecords.length > 0}}">清空</view>
+    </view>
+
+    <view class="record-list">
+      <view class="record-item" wx:for="{{medicalRecords}}" wx:key="id">
+        <view class="record-header">
+          <view class="record-medicine">{{item.medicineName}}</view>
+          <view class="record-time">{{item.createTime}}</view>
+        </view>
+        <view class="record-details">
+          <view class="record-frequency">频率：{{item.frequency}}</view>
+          <view class="record-times">时间：{{item.times.join(', ')}}</view>
+          <view class="record-notes" wx:if="{{item.notes}}">备注：{{item.notes}}</view>
+        </view>
+        <view class="record-actions">
+          <view class="action-btn use-btn" data-record="{{item}}" bindtap="useMedicalRecord">用于添加计划</view>
+          <view class="action-btn delete-btn" data-id="{{item.id}}" bindtap="deleteRecord">删除</view>
+        </view>
+      </view>
+
+      <view class="empty-tip" wx:if="{{medicalRecords.length === 0}}">
+        <view class="empty-icon">+</view>
+        <view class="empty-text">暂无医嘱记录</view>
+        <view class="empty-desc">添加第一条医生嘱咐的用药信息</view>
+      </view>
+    </view>
+  </view>
+</view>

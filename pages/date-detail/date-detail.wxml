@@ -1,0 +1,65 @@
+<view class="container date-detail-page">
+  <view class="date-header">
+    <view class="selected-date">{{displayDate}}</view>
+    <view class="date-title">用药计划详情</view>
+  </view>
+  
+  <view class="plans-section">
+    <!-- 早晨用药 -->
+    <view class="time-section" wx:if="{{morningPlans.length > 0}}">
+      <view class="section-header morning-header">
+        <view class="time-icon">🌅</view>
+        <view class="time-title">早晨用药</view>
+      </view>
+      <view class="plan-list">
+        <view class="plan-item" wx:for="{{morningPlans}}" wx:key="index">
+          <view class="plan-time">{{item.time}}</view>
+          <view class="plan-info">
+            <view class="medicine-name">{{item.name}}</view>
+            <view class="medicine-dose">{{item.dose}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 中午用药 -->
+    <view class="time-section" wx:if="{{noonPlans.length > 0}}">
+      <view class="section-header noon-header">
+        <view class="time-icon">☀️</view>
+        <view class="time-title">中午用药</view>
+      </view>
+      <view class="plan-list">
+        <view class="plan-item" wx:for="{{noonPlans}}" wx:key="index">
+          <view class="plan-time">{{item.time}}</view>
+          <view class="plan-info">
+            <view class="medicine-name">{{item.name}}</view>
+            <view class="medicine-dose">{{item.dose}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 晚上用药 -->
+    <view class="time-section" wx:if="{{eveningPlans.length > 0}}">
+      <view class="section-header evening-header">
+        <view class="time-icon">🌙</view>
+        <view class="time-title">晚上用药</view>
+      </view>
+      <view class="plan-list">
+        <view class="plan-item" wx:for="{{eveningPlans}}" wx:key="index">
+          <view class="plan-time">{{item.time}}</view>
+          <view class="plan-info">
+            <view class="medicine-name">{{item.name}}</view>
+            <view class="medicine-dose">{{item.dose}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="no-plans" wx:if="{{totalPlans === 0}}">
+      <view class="empty-icon">📅</view>
+      <view class="empty-text">该日期暂无用药计划</view>
+      <view class="empty-desc">前往"我的"页面添加计划</view>
+    </view>
+  </view>
+</view>

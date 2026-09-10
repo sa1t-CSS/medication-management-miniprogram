@@ -1,0 +1,9 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "拍照识别",
+  "permission": {
+    "scope.camera": {
+      "desc": "需要调用您的相机进行药品拍摄"
+    }
+  }
+}

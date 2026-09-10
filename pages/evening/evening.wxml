@@ -1,0 +1,28 @@
+<view class="container evening-page">
+  <view class="period-header">
+    <view class="period-mark">晚</view>
+    <view>
+      <view class="section-title">晚上用药计划</view>
+      <view class="selected-date-sub">{{displayDate}}</view>
+    </view>
+  </view>
+
+  <view class="plan-list">
+    <view class="plan-card" wx:for="{{medicationList}}" wx:key="index">
+      <image wx:if="{{item.imagePath}}" class="plan-image" src="{{item.imagePath}}" mode="aspectFill"></image>
+      <view wx:else class="plan-image placeholder-image">药</view>
+      <view class="plan-main">
+        <view class="plan-name">{{item.name}}</view>
+        <view class="plan-dose">{{item.dose}}</view>
+      </view>
+      <view class="plan-time">{{item.time}}</view>
+    </view>
+
+    <view class="empty-state" wx:if="{{medicationList.length === 0}}">
+      <view class="empty-title">暂无晚上用药计划</view>
+      <view class="empty-desc">可在“我的”里添加晚上用药计划</view>
+    </view>
+  </view>
+
+  <view class="add-medication-btn" bindtap="navigateToMine">修改用药计划</view>
+</view>

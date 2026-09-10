@@ -1,0 +1,164 @@
+<view class="container mine-page">
+  <view class="mine-header">我的</view>
+
+  <view class="card emergency-card">
+    <view class="section-title">紧急联系人</view>
+    <view class="form-group">
+      <view class="form-label">联系人姓名</view>
+      <input class="form-input" value="{{emergencyContactName}}" placeholder="请输入联系人姓名" bindinput="onEmergencyNameInput" />
+    </view>
+    <view class="form-group">
+      <view class="form-label">联系电话</view>
+      <input class="form-input" type="number" value="{{emergencyContactPhone}}" placeholder="请输入手机号或电话" bindinput="onEmergencyPhoneInput" />
+    </view>
+    <view class="emergency-save-btn" bindtap="saveEmergencyContact">保存紧急联系人</view>
+  </view>
+
+  <view class="card bluetooth-card">
+    <view class="section-title">蓝牙设备连接</view>
+    <view class="bluetooth-status">
+      <view class="bluetooth-dot {{bluetoothConnected ? 'connected' : ''}}"></view>
+      <view class="bluetooth-status-text">{{bluetoothStatusText}}</view>
+    </view>
+
+    <view class="bluetooth-connected" wx:if="{{connectedBluetoothDevice}}">
+      <view class="connected-name">{{connectedBluetoothDevice.name || '未知设备'}}</view>
+      <view class="connected-id">{{connectedBluetoothDevice.deviceId}}</view>
+    </view>
+
+    <view class="bluetooth-actions">
+      <view class="bluetooth-btn primary" bindtap="startBluetoothSearch">{{bluetoothSearching ? '停止搜索' : '搜索设备'}}</view>
+      <view class="bluetooth-btn secondary" wx:if="{{connectedBluetoothDevice}}" bindtap="disconnectBluetoothDevice">断开连接</view>
+    </view>
+
+    <view class="bluetooth-list" wx:if="{{bluetoothDevices.length > 0}}">
+      <view class="bluetooth-device"
+            wx:for="{{bluetoothDevices}}"
+            wx:key="deviceId"
+            data-id="{{item.deviceId}}"
+            data-name="{{item.name}}"
+            bindtap="connectBluetoothDevice">
+        <view class="device-main">
+          <view class="device-name">{{item.name}}</view>
+          <view class="device-id">{{item.deviceId}}</view>
+        </view>
+        <view class="device-rssi">{{item.RSSI}}</view>
+      </view>
+    </view>
+
+    <view class="bluetooth-empty" wx:if="{{bluetoothSearching && bluetoothDevices.length === 0}}">
+      正在搜索，请将蓝牙设备靠近手机
+    </view>
+  </view>
+
+  <view class="card medication-manage-card">
+    <view class="section-title">用药计划管理</view>
+
+    <view class="plan-section">
+      <view class="plan-title">早晨用药</view>
+      <view class="plan-item" wx:for="{{morningPlans}}" wx:key="index" data-index="{{index}}" data-time="morning" bindtap="editPlanItem">
+        <view class="plan-info">
+          <view class="med-name">{{item.name}}</view>
+          <view class="med-details">{{item.dose}} · {{item.time}} · {{item.date}} {{item.duration ? '持续' + item.duration + '天' : ''}}</view>
+        </view>
+        <view class="plan-actions">
+          <text class="icon edit-icon">改</text>
+          <text class="icon delete-icon" data-index="{{index}}" data-time="morning" bindtap="deletePlanItem">删</text>
+        </view>
+      </view>
+      <view class="add-btn" data-time="morning" bindtap="addPlanItem">+ 添加早晨用药</view>
+    </view>
+
+    <view class="plan-section">
+      <view class="plan-title">中午用药</view>
+      <view class="plan-item" wx:for="{{noonPlans}}" wx:key="index" data-index="{{index}}" data-time="noon" bindtap="editPlanItem">
+        <view class="plan-info">
+          <view class="med-name">{{item.name}}</view>
+          <view class="med-details">{{item.dose}} · {{item.time}} · {{item.date}} {{item.duration ? '持续' + item.duration + '天' : ''}}</view>
+        </view>
+        <view class="plan-actions">
+          <text class="icon edit-icon">改</text>
+          <text class="icon delete-icon" data-index="{{index}}" data-time="noon" bindtap="deletePlanItem">删</text>
+        </view>
+      </view>
+      <view class="add-btn" data-time="noon" bindtap="addPlanItem">+ 添加中午用药</view>
+    </view>
+
+    <view class="plan-section">
+      <view class="plan-title">晚上用药</view>
+      <view class="plan-item" wx:for="{{eveningPlans}}" wx:key="index" data-index="{{index}}" data-time="evening" bindtap="editPlanItem">
+        <view class="plan-info">
+          <view class="med-name">{{item.name}}</view>
+          <view class="med-details">{{item.dose}} · {{item.time}} · {{item.date}} {{item.duration ? '持续' + item.duration + '天' : ''}}</view>
+        </view>
+        <view class="plan-actions">
+          <text class="icon edit-icon">改</text>
+          <text class="icon delete-icon" data-index="{{index}}" data-time="evening" bindtap="deletePlanItem">删</text>
+        </view>
+      </view>
+      <view class="add-btn" data-time="evening" bindtap="addPlanItem">+ 添加晚上用药</view>
+    </view>
+  </view>
+</view>
+
+<view class="modal" wx:if="{{showModal}}">
+  <view class="modal-content">
+    <view class="modal-header">
+      <view class="modal-title">{{editingIndex === -1 ? '添加' : '编辑'}}用药计划</view>
+      <view class="modal-close" bindtap="closeModal">×</view>
+    </view>
+    <view class="modal-body">
+      <view class="photo-entry">
+        <view class="photo-preview" wx:if="{{currentPlan.imagePath}}">
+          <image src="{{currentPlan.imagePath}}" mode="aspectFill"></image>
+        </view>
+        <view class="photo-actions">
+          <view class="photo-btn" bindtap="openPlanCamera">{{currentPlan.imagePath ? '重新拍照' : '拍照录入药品'}}</view>
+          <view class="photo-tip">拍照保存在当前计划中，便于后续核对药品。</view>
+          <view class="algorithm-status" wx:if="{{algorithmRecognizing || algorithmResultText}}">
+            <view class="algorithm-dot {{algorithmRecognizing ? 'loading' : ''}}"></view>
+            <view class="algorithm-text">{{algorithmResultText}}</view>
+          </view>
+        </view>
+      </view>
+
+      <view class="camera-panel" wx:if="{{showPlanCamera}}">
+        <camera device-position="back" flash="off" binderror="cameraError" style="width: 100%; height: 420rpx;"></camera>
+        <view class="camera-actions">
+          <view class="btn btn-cancel" bindtap="closePlanCamera">取消拍照</view>
+          <view class="btn btn-confirm" bindtap="takePlanPhoto">拍摄</view>
+        </view>
+      </view>
+
+      <view class="form-group">
+        <view class="form-label">药品名称</view>
+        <input class="form-input" value="{{currentPlan.name}}" placeholder="请输入药品名称" bindinput="onNameInput" />
+      </view>
+      <view class="form-group">
+        <view class="form-label">剂量</view>
+        <input class="form-input" value="{{currentPlan.dose}}" placeholder="请输入剂量，例如 1片" bindinput="onDoseInput" />
+      </view>
+      <view class="form-group">
+        <view class="form-label">开始日期</view>
+        <picker mode="date" value="{{currentPlan.date}}" bindchange="onDateChange">
+          <view class="form-input date-picker">{{currentPlan.date || '请选择开始日期'}}</view>
+        </picker>
+      </view>
+      <view class="form-group">
+        <view class="form-label">持续天数</view>
+        <view class="duration-options">
+          <view class="duration-btn {{currentPlan.duration === 1 ? 'active' : ''}}" data-days="1" bindtap="selectDuration">1天</view>
+          <view class="duration-btn {{currentPlan.duration === 3 ? 'active' : ''}}" data-days="3" bindtap="selectDuration">3天</view>
+          <view class="duration-btn {{currentPlan.duration === 7 ? 'active' : ''}}" data-days="7" bindtap="selectDuration">7天</view>
+          <view class="duration-btn {{currentPlan.duration === 14 ? 'active' : ''}}" data-days="14" bindtap="selectDuration">14天</view>
+          <view class="duration-btn {{currentPlan.duration === 30 ? 'active' : ''}}" data-days="30" bindtap="selectDuration">30天</view>
+          <view class="duration-btn {{currentPlan.duration === 0 ? 'active' : ''}}" data-days="0" bindtap="selectDuration">长期</view>
+        </view>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <view class="btn btn-cancel" bindtap="closeModal">取消</view>
+      <view class="btn btn-confirm" bindtap="savePlan">保存计划</view>
+    </view>
+  </view>
+</view>
